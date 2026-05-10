@@ -1,0 +1,5 @@
+Training started: 2026-05-11 00:02:32
+Training finished: 2026-05-11 00:03:24
+Rows after cleaning: 48194
+Selected model: Extra Trees Tuned
+Final test metrics: {'MAE': 261.9113911866609, 'RMSE': 485.8463321082794, 'R2': 0.9400234194384217}

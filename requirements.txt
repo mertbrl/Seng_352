@@ -1,0 +1,10 @@
+pandas
+numpy
+scikit-learn
+PyYAML
+joblib
+matplotlib
+seaborn
+notebook
+streamlit
+requests

@@ -1,0 +1,70 @@
+random_seed: 42
+
+split:
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+preprocessing:
+  rainfall_cap_percentile: 0.995
+  use_isolation_forest: true
+  isolation_forest_contamination: 0.01
+  rare_category_min_freq: 0.01
+  scale_numeric: true
+
+feature_selection:
+  enabled: true
+  mode: top_k
+  top_k: 10
+  importance_threshold: 0.01
+
+models:
+  max_rows_for_slow_models: 8000
+  slow_models:
+    - SVR
+    - KNN
+    - MLP
+  include:
+    - Linear Regression
+    - Ridge
+    - Lasso
+    - Decision Tree
+    - Random Forest
+    - Extra Trees
+    - Gradient Boosting
+    - SVR
+    - KNN
+    - MLP
+
+tuning:
+  top_n_models: 3
+  search_type: grid
+  grids:
+    Ridge:
+      alpha: [0.1, 1.0, 10.0]
+    Lasso:
+      alpha: [0.001, 0.01, 0.1]
+    Decision Tree:
+      max_depth: [6, 10, 16]
+      min_samples_leaf: [5, 20, 50]
+    Random Forest:
+      n_estimators: [100, 200]
+      max_depth: [12, 20]
+      min_samples_leaf: [2, 10]
+    Extra Trees:
+      n_estimators: [100, 200]
+      max_depth: [12, 20]
+      min_samples_leaf: [2, 10]
+    Gradient Boosting:
+      n_estimators: [100, 200]
+      learning_rate: [0.05, 0.1]
+      max_depth: [2, 3]
+    SVR:
+      C: [1.0, 10.0]
+      epsilon: [0.1, 1.0]
+    KNN:
+      n_neighbors: [5, 15, 25]
+      weights: [uniform, distance]
+    MLP:
+      hidden_layer_sizes: [[64], [64, 32]]
+      alpha: [0.0001, 0.001]

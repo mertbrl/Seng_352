@@ -1,0 +1,10 @@
+raw_data: data/raw/Metro_Interstate_Traffic_Volume.csv
+processed_data_dir: data/processed
+model_dir: models
+figures_dir: reports/figures
+tables_dir: reports/tables
+model_path: models/final_model.joblib
+preprocessor_path: models/preprocessing_artifacts.joblib
+metrics_path: reports/tables/model_metrics.csv
+training_log_path: reports/training_log.txt
+model_card_path: reports/model_card.md

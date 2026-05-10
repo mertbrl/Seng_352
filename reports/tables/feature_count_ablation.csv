@@ -1,0 +1,5 @@
+top_k,model,features,MAE,RMSE,R2
+10,RandomForestRegressor,"hour_cos, hour, hour_sin, dow_sin, day_of_week, is_weekend, is_night, month_cos, temp_c, temp",287.85909748079246,497.88499377459715,0.9358706149868371
+25,RandomForestRegressor,"hour_cos, hour, hour_sin, dow_sin, day_of_week, is_weekend, is_night, month_cos, temp_c, temp, temp_c2, is_rush_hour, year, dow_cos, month, month_sin, clouds_all_pct, clouds_all, weather_main_Clouds, weather_main_Snow, weather_main_Clear, weather_main_Mist, rain_1h, rain_log, weather_main_Rain",333.6971753643856,531.4224113376247,0.9269401573060171
+20,RandomForestRegressor,"hour_cos, hour, hour_sin, dow_sin, day_of_week, is_weekend, is_night, month_cos, temp_c, temp, temp_c2, is_rush_hour, year, dow_cos, month, month_sin, clouds_all_pct, clouds_all, weather_main_Clouds, weather_main_Snow",335.353653194875,533.2267619458999,0.926443191562872
+15,RandomForestRegressor,"hour_cos, hour, hour_sin, dow_sin, day_of_week, is_weekend, is_night, month_cos, temp_c, temp, temp_c2, is_rush_hour, year, dow_cos, month",338.3990933741311,537.7372679465632,0.9251935106088598
