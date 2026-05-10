@@ -45,30 +45,42 @@ The target is `traffic_volume`, so this is a regression task.
 
 ## Preprocessing Pipeline
 
-The pipeline follows a leakage-safe chronological workflow:
+The preprocessing pipeline follows a leakage-safe chronological workflow:
 
-1. Load the CSV.
-2. Parse `date_time` as datetime.
-3. Sort the dataset chronologically.
-4. Remove only physically invalid records before splitting: `temp == 0`.
-5. Split chronologically into 70% train, 15% validation, and 15% test.
-6. Learn rainfall cap from the training set only.
-7. Apply the same rainfall cap to validation and test.
-8. Engineer time features: `hour`, `day_of_week`, `month`, `year`.
-9. Engineer indicator features: `is_weekend`, `is_rush_hour`, `is_night`, `is_holiday`.
-10. Add cyclical encodings: hour, weekday, and month sine/cosine features.
-11. Engineer weather features: `temp_c`, `temp_c2`, `rain_log`, `snow_log`, `is_raining`, `is_snowing`, `clouds_all_pct`.
-12. Fit Isolation Forest on the training set only.
-13. Remove detected outliers only from the training set.
-14. Learn rare `weather_main` categories from the training set only.
-15. One-hot encode grouped weather categories using training-defined columns.
-16. Separate features and target.
-17. Fit RobustScaler on training numeric features only.
-18. Transform validation and test with the fitted scaler.
-19. Select features using Random Forest feature importance fitted on training data only.
-20. Run top-k feature ablation for 10, 15, 20, and 25 selected features.
+- Load the CSV, parse `date_time` as datetime, and sort records chronologically.
+- Remove only physically invalid records before splitting: rows where `temp == 0`.
+- Split the cleaned data chronologically into 70% training, 15% validation, and 15% test sets.
+- Learn the rainfall cap from the training set only, then apply the same cap to validation and test.
+- Engineer raw time features: `hour`, `day_of_week`, `month`, and `year`.
+- Engineer indicator features: `is_weekend`, `is_rush_hour`, `is_night`, and `is_holiday`.
+- Add cyclical sine/cosine encodings for hour, weekday, and month.
+- Engineer weather features: `temp_c`, `temp_c2`, `rain_log`, `snow_log`, `is_raining`, `is_snowing`, and `clouds_all_pct`.
+- Compute `rain_log` after rainfall capping.
+- Fit Isolation Forest on the training set only.
+- Remove detected outliers only from the training set; validation and test remain unchanged.
+- Learn rare `weather_main` categories from the training set only.
+- Group rare weather categories into `Other`.
+- One-hot encode grouped weather categories separately for each split.
+- Align validation and test encoded columns to the training-defined column structure.
+- Separate features and target into `X` and `y`.
+- Fit RobustScaler on training numeric features only.
+- Transform validation and test using the fitted scaler.
+- Select features using Random Forest feature importance fitted on the training set only.
+- Run top-k feature ablation for `10`, `15`, `20`, and `25` selected features.
+- Select the final feature count based on validation performance.
 
-Final feature count: `top_k = 10`.
+The ablation results support `top_k = 10` as the final selected feature count.
+
+Short notebook version:
+
+The data is loaded, `date_time` is parsed, and records are sorted chronologically. Only physically invalid `temp == 0` rows are removed before a 70/15/15 chronological train-validation-test split. All learned preprocessing steps, including rainfall capping, rare weather grouping, outlier detection, scaling, and Random Forest feature selection, are fitted on the training set only. Validation and test data are transformed with the training-fitted artifacts, and encoded columns are aligned to the training column structure. Top-k ablation over `10`, `15`, `20`, and `25` features selected `top_k = 10` based on validation performance.
+
+Presentation version:
+
+- Chronological 70/15/15 split; no random split.
+- Only `temp == 0` is removed before splitting as invalid-record cleaning.
+- Rainfall capping, rare-category grouping, Isolation Forest, scaling, and feature selection are fitted on training data only.
+- Top-k ablation selected `top_k = 10` using validation performance.
 
 ## Modeling Pipeline
 
